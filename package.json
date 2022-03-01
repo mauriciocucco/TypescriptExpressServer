@@ -1,10 +1,13 @@
 {
   "name": "typescript-server",
   "version": "1.0.0",
-  "description": "REST server with Typescript and Sequelize.",
+  "description": "Basi REST server created with Express, Typescript and Sequelize.",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/index.js",
+    "watch": "tsc --watch",
+    "dev": "nodemon dist/index.js"
   },
   "author": "Mauricio Cucco",
   "license": "ISC",
