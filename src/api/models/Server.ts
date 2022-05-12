@@ -2,7 +2,7 @@ import express, { Application } from 'express';
 import cors from 'cors';
 import { generalErrors, notFound } from '../middlewares/errors';
 import usersRouter from '../routes/users';
-import db from '../database/config';
+import db from '../../config/database';
 
 class Server {
     private app: Application;
@@ -39,7 +39,7 @@ class Server {
             await db.authenticate();
             console.log('Connection has been established successfully.');
             
-        } catch (error) {
+        } catch (error: any) {
             throw new Error(error);
         }
     }
