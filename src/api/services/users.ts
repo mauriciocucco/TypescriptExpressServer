@@ -11,7 +11,7 @@ export const getUserById = async (id: string) => {
 
     if (!user) {
         const error = new Error('User not found');
-        error.status = 404;
+        // error.status = 404;
         throw error;
     }
 
@@ -22,9 +22,9 @@ export const storeUser = async (body: any) => {
     try {
         await verifyUniqueEmail(body.email);
 
-        const user = User.build(body);
+        const user = User?.build(body);
 
-        await user.save();
+        await user?.save();
 
         return user;
     } catch (error) {

@@ -1,12 +1,12 @@
 import dotenv from 'dotenv';
 
-export abstract class EnvironmentConfig {
+export abstract class Environment {
     constructor() {
         this.setEnvironment();
     }
 
-    public getEnvironmentValue(key: string): string | undefined {
-        return process.env[key];
+    public getEnvironmentValue(key: string): string {
+        return process.env[key] || '';
     }
 
     public getEnvironmentAsNumber(key: string): number {

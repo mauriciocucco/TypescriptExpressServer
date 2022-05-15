@@ -3,10 +3,10 @@ import cors from 'cors';
 import morgan from 'morgan';
 import { generalErrors, notFound } from '../middlewares/errors';
 import usersRouter from '../routes/users';
-import { EnvironmentConfig } from '../../config/environment';
+import { Environment } from '../../config/environment';
 import db from '../../config/database';
 
-class Server extends EnvironmentConfig {
+class Server extends Environment {
     private app: Application = express();
     private port: string = this.getEnvironmentValue('PORT') || '3000';
     private paths = {
