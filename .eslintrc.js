@@ -14,7 +14,4 @@ module.exports = {
         ecmaVersion: 'latest',
     },
     plugins: ['@typescript-eslint', 'prettier'],
-    rules: {
-        'prettier/prettier': 'error',
-    },
-}
+};
