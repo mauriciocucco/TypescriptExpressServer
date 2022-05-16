@@ -1,22 +1,23 @@
-import { DataTypes } from 'sequelize';
-import db from '../../config/database';
+import { DataTypes, Model } from 'sequelize';
+import dbConnection from '../../config/database';
 
-const User = db.define('User', {
-    given_name: {
-        type: DataTypes.STRING,
-    },
-    family_name: {
-        type: DataTypes.STRING,
-    },
-    phone_number: {
-        type: DataTypes.STRING,
-    },
-    email: {
-        type: DataTypes.STRING,
-    },
-    status: {
-        type: DataTypes.BOOLEAN,
-    },
-});
+class User extends Model {}
 
-export default User;
+User.init(
+    {
+        // Model attributes are defined here
+        firstName: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        lastName: {
+            type: DataTypes.STRING,
+            // allowNull defaults to true
+        },
+    },
+    {
+        // Other model options go here
+        sequelize: dbConnection, // We need to pass the connection instance
+        modelName: 'User', // We need to choose the model name
+    }
+);

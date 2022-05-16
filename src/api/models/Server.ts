@@ -3,19 +3,17 @@ import cors from 'cors';
 import morgan from 'morgan';
 import { generalErrors, notFound } from '../middlewares/errors';
 import usersRouter from '../routes/users';
-import { Environment } from '../../config/environment';
-import db from '../../config/database';
+import config from '../../config/config';
+import dbConnection from '../../config/database';
 
-class Server extends Environment {
+class Server {
     private app: Application = express();
-    private port: string = this.getEnvironmentValue('PORT') || '3000';
+    private port: string = config.port || '3000';
     private paths = {
-        users: '/api/users',
+        users: `${config.api.prefix}/users`,
     };
 
     constructor() {
-        super();
-
         //Conectar a la DB
         this.connectDB();
 
@@ -37,7 +35,7 @@ class Server extends Environment {
 
     private async connectDB(): Promise<void> {
         try {
-            await db.authenticate();
+            await dbConnection.authenticate();
             console.log('Connection has been established successfully.');
         } catch (error: any) {
             throw new Error(error);

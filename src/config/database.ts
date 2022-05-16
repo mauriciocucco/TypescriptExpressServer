@@ -1,16 +1,15 @@
 import { Sequelize, Dialect } from 'sequelize';
-import dotenv from 'dotenv';
-dotenv.config();
+import config from './config';
 
-const dbName = process.env.DB_NAME as string;
-const dbUser = process.env.DB_USER as string;
-const dbHost = process.env.DB_HOST;
-const dbDriver = process.env.DB_DRIVER as Dialect;
-const dbPassword = process.env.DB_PASSWORD;
+const dbConnection = new Sequelize(
+    config.dbName,
+    config.dbUser,
+    config.dbPassword,
+    {
+        host: config.dbHost,
+        dialect: config.dbDriver as Dialect,
+        port: config.dbPort,
+    }
+);
 
-const db = new Sequelize(dbName, dbUser, dbPassword, {
-    host: dbHost,
-    dialect: dbDriver,
-});
-
-export default db;
+export default dbConnection;
