@@ -12,6 +12,9 @@ export default {
     //Server
     port: process.env.PORT as string,
 
+    //Environment
+    env: process.env.NODE_ENV,
+
     //Conexión a la base de datos
     dbName: process.env.DB_NAME as string,
     dbUser: process.env.DB_USER as string,

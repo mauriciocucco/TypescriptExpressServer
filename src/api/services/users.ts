@@ -1,4 +1,5 @@
 import { verifyUniqueEmail } from '../helpers/userValidators';
+import User from '../models/User';
 // import User from '../models/User';
 
 export const getUsers = async () => {
@@ -17,15 +18,14 @@ export const getUserById = async (id: string) => {
 };
 
 export const storeUser = async (body: any) => {
-    // try {
-    //     await verifyUniqueEmail(body.email);
-    //     const user = User?.build(body);
-    //     await user?.save();
-    //     return user;
-    // } catch (error) {
-    //     console.log('STORE USER: ', error);
-    //     throw error;
-    // }
+    try {
+        // await verifyUniqueEmail(body.email);
+        const user = User?.create(body);
+        return user;
+    } catch (error) {
+        console.log('STORE USER: ', error);
+        throw error;
+    }
 };
 
 export const updateUser = async (id: string, body: any) => {

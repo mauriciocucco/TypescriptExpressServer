@@ -12,4 +12,15 @@ const dbConnection = new Sequelize(
     }
 );
 
+const isDev = config.env === 'development';
+
+export const dbSync = async () => {
+    await dbConnection.sync({ alter: isDev });
+    console.log('Models Sync successfully');
+};
+
+/*Pro tip: reserve using force or alter for development environments 
+so you don’t accidentally recreate your production database, losing all 
+your data or applying changes to your database that might break your application.*/
+
 export default dbConnection;

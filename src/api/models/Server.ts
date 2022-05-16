@@ -4,7 +4,7 @@ import morgan from 'morgan';
 import { generalErrors, notFound } from '../middlewares/errors';
 import usersRouter from '../routes/users';
 import config from '../../config/config';
-import dbConnection from '../../config/database';
+import { dbSync } from '../../config/database';
 
 class Server {
     private app: Application = express();
@@ -35,8 +35,11 @@ class Server {
 
     private async connectDB(): Promise<void> {
         try {
-            await dbConnection.authenticate();
-            console.log('Connection has been established successfully.');
+            // await dbConnection.authenticate();
+
+            // console.log('Connection has been established successfully.');
+
+            await dbSync();
         } catch (error: any) {
             throw new Error(error);
         }
