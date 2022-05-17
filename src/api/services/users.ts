@@ -1,18 +1,25 @@
 import { verifyUniqueEmail } from '../helpers/userValidators';
 import { UserInput, UserOutput } from '../interfaces/user';
 import User from '../models/User';
+import CustomError from '../errors/custom-error';
 
 export const getUsers = async (): Promise<UserOutput[]> => {
-    const users = await User.findAll();
+    const users = await User.findAll({
+        attributes: { exclude: ['password'] },
+    });
 
     return users;
 };
 
 export const getUserById = async (id: string) => {
-    const user = await User.findByPk(id);
+    const user = await User.findByPk(id, {
+        attributes: { exclude: ['password'] },
+    });
 
     if (!user) {
-        throw new Error('User not found');
+        const error = new CustomError('User not found.');
+        error.status = 400;
+        throw error;
     }
 
     return user;
@@ -41,7 +48,9 @@ export const updateUser = async (
         await verifyUniqueEmail(body.email);
 
         if (!user) {
-            throw new Error('User not found');
+            const error = new CustomError('User not found.');
+            error.status = 400;
+            throw error;
         }
 
         const updatedUser = await user.update(body);

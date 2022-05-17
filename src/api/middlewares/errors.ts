@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
+import CustomError from '../errors/custom-error';
 
 export const notFound = (req: Request, res: Response, next: NextFunction) => {
-    const error = new Error('Route not found.');
+    const error = new CustomError('Route not found.');
 
-    // error.status = 404;
+    error.status = 404;
 
     next(error);
 };

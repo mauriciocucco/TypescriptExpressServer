@@ -7,6 +7,7 @@ class User extends Model<UserAttributes, UserInput> implements UserAttributes {
     public first_name!: string;
     public last_name!: string;
     public phone_number!: string;
+    public password!: string;
     public email!: string;
     public active!: boolean;
 
@@ -30,13 +31,19 @@ User.init(
         },
         last_name: {
             type: DataTypes.STRING,
+            allowNull: false,
             // allowNull defaults to true
         },
         phone_number: {
             type: DataTypes.STRING,
         },
+        password: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
         email: {
             type: DataTypes.STRING,
+            allowNull: false,
         },
         active: {
             type: DataTypes.BOOLEAN,
