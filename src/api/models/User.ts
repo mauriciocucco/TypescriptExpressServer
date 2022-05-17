@@ -1,6 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import dbConnection from '../../config/database';
-import { UserAttributes, UserInput } from '../interfaces/user';
+import { UserAttributes, UserInput } from '../interfaces/users/user';
 
 class User extends Model<UserAttributes, UserInput> implements UserAttributes {
     public id!: number;

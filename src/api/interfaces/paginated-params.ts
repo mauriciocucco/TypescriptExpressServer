@@ -1,6 +1,6 @@
 export interface PaginatedParams {
-    limit?: number;
-    offset?: number;
+    size?: number;
+    page?: number;
     orderBy?: string;
     orderType?: OrderType;
 }

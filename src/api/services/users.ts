@@ -1,9 +1,9 @@
 import { verifyUniqueEmail } from '../helpers/userValidators';
-import { UserInput, UserOutput } from '../interfaces/user';
+import { UserInput, UserOutput } from '../interfaces/users/user';
 import User from '../models/User';
 import NotFound from '../errors/not-found';
 import { PaginatedParams } from '../interfaces/paginated-params';
-import { PaginatedUsers } from '../interfaces/paginated-users';
+import { PaginatedUsers } from '../interfaces/users/paginated-users';
 
 export const getUsers = async (): Promise<UserOutput[]> => {
     const users = await User.findAll({
