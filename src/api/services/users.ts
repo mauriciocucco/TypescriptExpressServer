@@ -30,6 +30,7 @@ export const getUsersPaginated = async (
         offset,
         where: { active: true },
         order: [[orderBy, orderType]],
+        attributes: { exclude: ['password'] },
     });
 
     const pages = Math.ceil(totalItems / size);

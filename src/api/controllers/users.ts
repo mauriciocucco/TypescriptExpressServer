@@ -33,7 +33,7 @@ export const paginated = async (
         const users = await getUsersPaginated(req.query);
 
         res.json({
-            data: users,
+            ...users,
         });
     } catch (error) {
         next(error);
