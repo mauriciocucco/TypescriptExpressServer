@@ -8,7 +8,7 @@ class User extends Model<UserAttributes, UserInput> implements UserAttributes {
     public last_name!: string;
     public phone_number!: string;
     public email!: string;
-    public hobbies!: string;
+    public active!: boolean;
 
     // timestamps!
     public readonly createdAt!: Date;
@@ -38,8 +38,9 @@ User.init(
         email: {
             type: DataTypes.STRING,
         },
-        hobbies: {
-            type: DataTypes.STRING,
+        active: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
         },
     },
     {

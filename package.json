@@ -5,9 +5,9 @@
     "main": "dist/index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "tsc && node dist/api/index.js",
-        "watch": "tsc --watch",
-        "dev": "tsc && concurrently \"tsc --watch\" \"nodemon dist/api/index.js\"",
+        "start": "npx tsc && node dist/api/index.js",
+        "watch": "npx tsc --watch",
+        "dev": "npx tsc && concurrently \"npx tsc --watch\" \"nodemon dist/api/index.js\"",
         "lint": "eslint --fix"
     },
     "author": "Mauricio Cucco",
