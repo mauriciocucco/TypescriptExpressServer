@@ -1,4 +1,4 @@
-import CustomError from '../errors/custom-error';
+import BadRequest from '../errors/not-found';
 import User from '../models/User';
 
 export const verifyUniqueEmail = async (email = ''): Promise<void> => {
@@ -8,8 +8,6 @@ export const verifyUniqueEmail = async (email = ''): Promise<void> => {
 
     //Si que existe un usuario con ese email
     if (user) {
-        const error = new CustomError('The email already exists.');
-        error.status = 400;
-        throw error;
+        throw new BadRequest('The email already exists.');
     }
 };

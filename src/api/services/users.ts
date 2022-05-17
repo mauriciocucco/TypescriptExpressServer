@@ -1,7 +1,7 @@
 import { verifyUniqueEmail } from '../helpers/userValidators';
 import { UserInput, UserOutput } from '../interfaces/user';
 import User from '../models/User';
-import CustomError from '../errors/custom-error';
+import NotFound from '../errors/not-found';
 
 export const getUsers = async (): Promise<UserOutput[]> => {
     const users = await User.findAll({
@@ -17,9 +17,7 @@ export const getUserById = async (id: string) => {
     });
 
     if (!user) {
-        const error = new CustomError('User not found.');
-        error.status = 400;
-        throw error;
+        throw new NotFound('User not found.');
     }
 
     return user;
@@ -48,9 +46,9 @@ export const updateUser = async (
         await verifyUniqueEmail(body.email);
 
         if (!user) {
-            const error = new CustomError('User not found.');
-            error.status = 400;
-            throw error;
+            if (!user) {
+                throw new NotFound('User not found.');
+            }
         }
 
         const updatedUser = await user.update(body);

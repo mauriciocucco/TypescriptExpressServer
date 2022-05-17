@@ -1,5 +1,5 @@
-class CustomError extends Error {
-    public status: number | null = null;
+class BadRequest extends Error {
+    public status: number;
 
     constructor(message: string) {
         super(message);
@@ -9,6 +9,8 @@ class CustomError extends Error {
 
         // capturing the stack trace keeps the reference to your error class
         Error.captureStackTrace(this, this.constructor);
+
+        this.status = 400;
     }
 
     statusCode() {
@@ -16,4 +18,4 @@ class CustomError extends Error {
     }
 }
 
-export default CustomError;
+export default BadRequest;
