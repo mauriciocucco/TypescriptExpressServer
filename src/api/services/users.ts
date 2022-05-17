@@ -2,6 +2,8 @@ import { verifyUniqueEmail } from '../helpers/userValidators';
 import { UserInput, UserOutput } from '../interfaces/user';
 import User from '../models/User';
 import NotFound from '../errors/not-found';
+import { PaginatedParams } from '../interfaces/paginated-params';
+import { PaginatedUsers } from '../interfaces/paginated-users';
 
 export const getUsers = async (): Promise<UserOutput[]> => {
     const users = await User.findAll({
@@ -9,6 +11,30 @@ export const getUsers = async (): Promise<UserOutput[]> => {
     });
 
     return users;
+};
+
+export const getUsersPaginated = async (
+    queryParams: PaginatedParams
+): Promise<PaginatedUsers> => {
+    const {
+        size = 10,
+        page: currentPage = 1,
+        orderBy = 'id',
+        orderType = 'DESC',
+    } = queryParams;
+
+    const offset = (currentPage - 1) * size;
+
+    const { count: totalItems, rows: data } = await User.findAndCountAll({
+        limit: size,
+        offset,
+        where: { active: true },
+        order: [[orderBy, orderType]],
+    });
+
+    const pages = Math.ceil(totalItems / size);
+
+    return { totalItems, data, currentPage, pages };
 };
 
 export const getUserById = async (id: string) => {
@@ -43,13 +69,11 @@ export const updateUser = async (
     try {
         const user = await User.findByPk(id);
 
-        await verifyUniqueEmail(body.email);
-
         if (!user) {
-            if (!user) {
-                throw new NotFound('User not found.');
-            }
+            throw new NotFound('User not found.');
         }
+
+        await verifyUniqueEmail(body.email);
 
         const updatedUser = await user.update(body);
 

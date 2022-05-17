@@ -20,10 +20,6 @@ export const generalErrors = (
 
     console.log('ERROR DESDE EL HANDLER: ', err);
 
-    if (err.validationErrors) {
-        return res.status(err.status).json({ errors: err.validationErrors });
-    }
-
     res.status(err.status || 500).json({
         error: err.message || 'Internal server error.',
     });
