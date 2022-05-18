@@ -1,4 +1,3 @@
-import { verifyUniqueEmail } from '../helpers/userValidators';
 import { UserInput, UserOutput } from '../interfaces/users/user';
 import User from '../models/User';
 import NotFound from '../errors/not-found';
@@ -52,8 +51,6 @@ export const getUserById = async (id: string) => {
 
 export const storeUser = async (body: UserInput): Promise<UserOutput> => {
     try {
-        await verifyUniqueEmail(body.email);
-
         const user = await User.create(body);
 
         return user;
@@ -73,8 +70,6 @@ export const updateUser = async (
         if (!user) {
             throw new NotFound('User not found.');
         }
-
-        await verifyUniqueEmail(body.email);
 
         const updatedUser = await user.update(body);
 

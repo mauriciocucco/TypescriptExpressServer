@@ -1,6 +1,8 @@
 import { DataTypes, Model } from 'sequelize';
 import dbConnection from '../../config/database';
+import { hash } from '../helpers/hashPassword';
 import { UserAttributes, UserInput } from '../interfaces/users/user';
+import Application from './Application';
 
 class User extends Model<UserAttributes, UserInput> implements UserAttributes {
     public id!: number;
@@ -15,6 +17,17 @@ class User extends Model<UserAttributes, UserInput> implements UserAttributes {
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
     public readonly deletedAt!: Date;
+
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models: any) {
+        this.belongsToMany(Application, {
+            through: 'user_application',
+        });
+    }
 }
 
 User.init(
@@ -40,10 +53,21 @@ User.init(
         password: {
             type: DataTypes.STRING,
             allowNull: false,
+            set(value: string) {
+                // Storing passwords in plaintext in the database is terrible.
+                // Hashing the value with an appropriate cryptographic hash function is better.
+                this.setDataValue('password', hash(value));
+            },
         },
         email: {
             type: DataTypes.STRING,
             allowNull: false,
+            unique: true,
+            validate: {
+                isEmail: {
+                    msg: 'Invalid email address.',
+                },
+            },
         },
         active: {
             type: DataTypes.BOOLEAN,

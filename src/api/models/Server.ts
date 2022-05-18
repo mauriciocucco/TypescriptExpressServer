@@ -3,6 +3,8 @@ import cors from 'cors';
 import morgan from 'morgan';
 import { generalErrors, notFound } from '../middlewares/errors';
 import usersRouter from '../routes/users';
+import applicationsRouter from '../routes/applications';
+import companiesRouter from '../routes/companies';
 import config from '../../config/config';
 import dbConnection, { dbSync } from '../../config/database';
 
@@ -11,6 +13,8 @@ class Server {
     private port: string = config.port || '3000';
     private paths = {
         users: `${config.api.prefix}/users`,
+        applications: `${config.api.prefix}/applications`,
+        companies: `${config.api.prefix}/companies`,
     };
 
     constructor() {
@@ -62,6 +66,8 @@ class Server {
 
     private routes(): void {
         this.app.use(this.paths.users, usersRouter);
+        this.app.use(this.paths.applications, applicationsRouter);
+        this.app.use(this.paths.companies, companiesRouter);
     }
 
     private errorsHandlers(): void {

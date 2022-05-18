@@ -1,12 +1,12 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import {
-    deleteUser,
-    getUserById,
-    getUsers,
-    getUsersPaginated,
-    storeUser,
-    updateUser,
-} from '../services/users';
+    deleteCompany,
+    getCompanies,
+    getCompaniesPaginated,
+    getCompanyById,
+    storeCompany,
+    updateCompany,
+} from '../services/companies';
 
 export const index: RequestHandler = async (
     req: Request,
@@ -14,10 +14,10 @@ export const index: RequestHandler = async (
     next: NextFunction
 ) => {
     try {
-        const users = await getUsers();
+        const companies = await getCompanies();
 
         res.json({
-            data: users,
+            data: companies,
         });
     } catch (error) {
         next(error);
@@ -30,10 +30,10 @@ export const paginated: RequestHandler = async (
     next: NextFunction
 ) => {
     try {
-        const users = await getUsersPaginated(req.query);
+        const companies = await getCompaniesPaginated(req.query);
 
         res.json({
-            ...users,
+            ...companies,
         });
     } catch (error) {
         next(error);
@@ -46,10 +46,10 @@ export const show: RequestHandler = async (
     next: NextFunction
 ) => {
     try {
-        const user = await getUserById(req.params.id);
+        const company = await getCompanyById(req.params.id);
 
         res.json({
-            data: user,
+            data: company,
         });
     } catch (error) {
         next(error);
@@ -62,10 +62,10 @@ export const store: RequestHandler = async (
     next: NextFunction
 ) => {
     try {
-        const newUser = await storeUser(req.body);
+        const newCompany = await storeCompany(req.body);
 
         res.json({
-            data: newUser,
+            data: newCompany,
         });
     } catch (error) {
         next(error);
@@ -78,10 +78,10 @@ export const update: RequestHandler = async (
     next: NextFunction
 ) => {
     try {
-        const updatedUser = await updateUser(req.params.id, req.body);
+        const updatedCompany = await updateCompany(req.params.id, req.body);
 
         res.json({
-            data: updatedUser,
+            data: updatedCompany,
         });
     } catch (error) {
         next(error);
@@ -94,10 +94,10 @@ export const destroy: RequestHandler = async (
     next: NextFunction
 ) => {
     try {
-        const deletedUser = await deleteUser(req.params.id);
+        const deletedCompany = await deleteCompany(req.params.id);
 
         res.json({
-            data: deletedUser,
+            data: deletedCompany,
         });
     } catch (error) {
         next(error);

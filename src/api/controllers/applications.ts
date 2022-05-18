@@ -1,12 +1,12 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import {
-    deleteUser,
-    getUserById,
-    getUsers,
-    getUsersPaginated,
-    storeUser,
-    updateUser,
-} from '../services/users';
+    deleteApplication,
+    getApplicationById,
+    getApplications,
+    getApplicationsPaginated,
+    storeApplication,
+    updateApplication,
+} from '../services/applications';
 
 export const index: RequestHandler = async (
     req: Request,
@@ -14,10 +14,10 @@ export const index: RequestHandler = async (
     next: NextFunction
 ) => {
     try {
-        const users = await getUsers();
+        const applications = await getApplications();
 
         res.json({
-            data: users,
+            data: applications,
         });
     } catch (error) {
         next(error);
@@ -30,10 +30,10 @@ export const paginated: RequestHandler = async (
     next: NextFunction
 ) => {
     try {
-        const users = await getUsersPaginated(req.query);
+        const applications = await getApplicationsPaginated(req.query);
 
         res.json({
-            ...users,
+            ...applications,
         });
     } catch (error) {
         next(error);
@@ -46,10 +46,10 @@ export const show: RequestHandler = async (
     next: NextFunction
 ) => {
     try {
-        const user = await getUserById(req.params.id);
+        const application = await getApplicationById(req.params.id);
 
         res.json({
-            data: user,
+            data: application,
         });
     } catch (error) {
         next(error);
@@ -62,10 +62,10 @@ export const store: RequestHandler = async (
     next: NextFunction
 ) => {
     try {
-        const newUser = await storeUser(req.body);
+        const newApplication = await storeApplication(req.body);
 
         res.json({
-            data: newUser,
+            data: newApplication,
         });
     } catch (error) {
         next(error);
@@ -78,10 +78,13 @@ export const update: RequestHandler = async (
     next: NextFunction
 ) => {
     try {
-        const updatedUser = await updateUser(req.params.id, req.body);
+        const updatedApplication = await updateApplication(
+            req.params.id,
+            req.body
+        );
 
         res.json({
-            data: updatedUser,
+            data: updatedApplication,
         });
     } catch (error) {
         next(error);
@@ -94,10 +97,10 @@ export const destroy: RequestHandler = async (
     next: NextFunction
 ) => {
     try {
-        const deletedUser = await deleteUser(req.params.id);
+        const deletedApplication = await deleteApplication(req.params.id);
 
         res.json({
-            data: deletedUser,
+            data: deletedApplication,
         });
     } catch (error) {
         next(error);
