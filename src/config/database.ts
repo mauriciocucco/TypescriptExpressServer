@@ -1,7 +1,7 @@
 import { Sequelize, Dialect } from 'sequelize';
 import config from './config';
 
-const dbConnection: any = new Sequelize(
+const dbConnection = new Sequelize(
     config.dbName,
     config.dbUser,
     config.dbPassword,
