@@ -2,7 +2,6 @@ import { DataTypes, Model } from 'sequelize';
 import dbConnection from '../../config/database';
 import { hash } from '../helpers/hashPassword';
 import { UserAttributes, UserInput } from '../interfaces/users/user';
-import Application from './Application';
 
 class User extends Model<UserAttributes, UserInput> implements UserAttributes {
     public id!: number;
@@ -17,17 +16,6 @@ class User extends Model<UserAttributes, UserInput> implements UserAttributes {
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
     public readonly deletedAt!: Date;
-
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models: any) {
-        this.belongsToMany(Application, {
-            through: 'user_application',
-        });
-    }
 }
 
 User.init(

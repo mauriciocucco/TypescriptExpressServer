@@ -1,18 +1,15 @@
 import { DataTypes, Model } from 'sequelize';
 import dbConnection from '../../config/database';
 import {
-    CompanyAttributes,
-    CompanyInput,
-} from '../interfaces/companies/company';
-import Application from './Application';
+    UserApplicationAttributes,
+    UserApplicationInput,
+} from '../interfaces/user_application/user_application';
 
-class Company
-    extends Model<CompanyAttributes, CompanyInput>
-    implements CompanyAttributes
+class User_Application
+    extends Model<UserApplicationAttributes, UserApplicationInput>
+    implements UserApplicationAttributes
 {
     public id!: number;
-    public name!: string;
-    public ceo!: string;
 
     // timestamps!
     public readonly createdAt!: Date;
@@ -20,7 +17,7 @@ class Company
     public readonly deletedAt!: Date;
 }
 
-Company.init(
+User_Application.init(
     {
         // Model attributes are defined here
         id: {
@@ -28,28 +25,14 @@ Company.init(
             autoIncrement: true,
             primaryKey: true,
         },
-        name: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        ceo: {
-            type: DataTypes.STRING,
-            // allowNull defaults to true
-        },
     },
     {
         // Other model options go here
         timestamps: true,
         sequelize: dbConnection, // We need to pass the connection instance
-        modelName: 'company', // We need to choose the model name
+        modelName: 'user_application', // We need to choose the model name
         paranoid: true, //this imposes a soft delete on the model by adding a deletedAt attribute that marks records as deleted when invoking the destroy method.
     }
 );
 
-//ASOCIACIONES
-Company.hasMany(Application, {
-    foreignKey: 'companyId',
-});
-Application.belongsTo(Company, { as: 'company' });
-
-export default Company;
+export default User_Application;

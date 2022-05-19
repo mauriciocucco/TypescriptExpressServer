@@ -1,7 +1,7 @@
 import { Sequelize, Dialect } from 'sequelize';
 import config from './config';
 
-const dbConnection = new Sequelize(
+const dbConnection: any = new Sequelize(
     config.dbName,
     config.dbUser,
     config.dbPassword,
@@ -16,6 +16,7 @@ const isDev = config.env === 'development';
 
 export const dbSync = async () => {
     await dbConnection.sync({ alter: isDev });
+
     console.log('Models Sync successfully');
 };
 

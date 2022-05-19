@@ -6,6 +6,7 @@ import {
 } from '../interfaces/applications/applications';
 import Company from './Company';
 import User from './User';
+import User_Application from './User_Application';
 
 class Application
     extends Model<ApplicationAttributes, ApplicationInput>
@@ -19,16 +20,6 @@ class Application
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
     public readonly deletedAt!: Date;
-
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models: any) {
-        this.belongsTo(models.Company);
-        this.belongsToMany(User, { through: 'user_application' });
-    }
 }
 
 Application.init(
@@ -56,5 +47,11 @@ Application.init(
         paranoid: true, //this imposes a soft delete on the model by adding a deletedAt attribute that marks records as deleted when invoking the destroy method.
     }
 );
+
+//ASOCIACIONES
+Application.belongsToMany(User, { through: User_Application });
+User.belongsToMany(Application, {
+    through: User_Application,
+});
 
 export default Application;
